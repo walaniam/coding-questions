@@ -17,6 +17,7 @@ public class TreeTraversal {
     }
 
     private static int dfsSum(TreeNode n) {
+        // DFS, postorder
         int leftBranchSum = Optional.ofNullable(n.getLeft())
             .map(TreeTraversal::dfsSum)
             .orElse(0);

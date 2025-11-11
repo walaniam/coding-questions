@@ -5,12 +5,12 @@ import java.util.Objects;
 import java.util.stream.Stream;
 
 public class TreeNode {
-    private final int value;
-    private TreeNode left;
-    private TreeNode right;
+    public final int val;
+    public TreeNode left;
+    public TreeNode right;
 
     public TreeNode(int value) {
-        this.value = value;
+        this.val = value;
     }
 
     public TreeNode addLeft(int value) {
@@ -30,7 +30,7 @@ public class TreeNode {
     }
 
     public int getValue() {
-        return value;
+        return val;
     }
 
     public TreeNode getLeft() {

@@ -136,4 +136,23 @@ class MaxPathSumInBinaryTreeTest {
         assertThat(tree.maxPathSum(root)).isEqualTo(10);
     }
 
+    @Test
+    void calculateShort() {
+        var root = new TreeNode(2);
+        var n2 = root.addLeft(-1);
+
+        var tree = new MaxPathSumInBinaryTree();
+        assertThat(tree.maxPathSum(root)).isEqualTo(2);
+    }
+
+    @Test
+    void calculateShort2() {
+        var root = new TreeNode(2);
+        root.addLeft(-1);
+        root.addRight(-2);
+
+        var tree = new MaxPathSumInBinaryTree();
+        assertThat(tree.maxPathSum(root)).isEqualTo(2);
+    }
+
 }

@@ -1,9 +1,10 @@
 package walaniam.coding;
 
 import java.util.Comparator;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.IntStream;
 
 /**
  * Maximum Path Sum in a Binary Tree
@@ -29,23 +30,34 @@ import java.util.Optional;
 public class MaxPathSumInBinaryTree {
 
     public int maxPathSum(TreeNode root) {
-        Map<TreeNode, Integer> nodeMax = new HashMap<>();
+        Set<Integer> nodeMax = new HashSet<>();
         int rootMax = traverse(root, nodeMax);
-        Optional<Integer> max = nodeMax.values().stream().max(Comparator.comparing(Integer::intValue));
-        return max.orElse(rootMax);
+        Integer max = nodeMax.stream()
+            .max(Comparator.comparing(Integer::intValue))
+            .orElse(rootMax);
+        return Math.max(rootMax, max);
     }
 
-    private static int traverse(TreeNode n, Map<TreeNode, Integer> nodeSums) {
+    private static int traverse(TreeNode n, Set<Integer> maxes) {
 
-        int leftBranch = Optional.ofNullable(n.getLeft())
-            .map(it -> traverse(it, nodeSums))
+        int leftBranch = Optional.ofNullable(n.left)
+            .map(it -> traverse(it, maxes))
             .orElse(0);
-        int rightBranch = Optional.ofNullable(n.getRight())
-            .map(it -> traverse(it, nodeSums))
+        int rightBranch = Optional.ofNullable(n.right)
+            .map(it -> traverse(it, maxes))
             .orElse(0);
 
-        nodeSums.put(n, n.getValue() + leftBranch + rightBranch);
-        return n.getValue() + Math.max(leftBranch, rightBranch);
+        IntStream.of(
+            n.val,
+            n.val + leftBranch,
+            n.val + rightBranch,
+            n.val + leftBranch + rightBranch
+        ).max().ifPresent(maxes::add);
+
+        return Math.max(
+            n.val + Math.max(leftBranch, rightBranch),
+            n.val
+        );
     }
 
 }
